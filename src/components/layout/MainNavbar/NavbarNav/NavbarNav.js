@@ -1,12 +1,8 @@
 import React from "react";
-import { Nav } from "shards-react";
+import { Nav, NavItem } from "shards-react";
 
-import Notifications from "./Notifications";
-import UserActions from "./UserActions";
+import NavbarNavItems from "./NavbarNavItems";
 
 export default () => (
-  <Nav navbar className="border-left flex-row">
-    <Notifications />
-    <UserActions />
-  </Nav>
+    <NavbarNavItems />
 );
