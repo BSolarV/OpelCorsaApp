@@ -10,7 +10,7 @@ import teamsService from '../services/teams.service';
 
 import PageTitle from "../components/common/PageTitle";
 
-class TeamsList extends Component {
+class AdminQuimioterapia extends Component {
 
   constructor(props) {
     super(props);
@@ -57,4 +57,4 @@ class TeamsList extends Component {
 
 }
 
-export default TeamsList;
+export default AdminQuimioterapia;

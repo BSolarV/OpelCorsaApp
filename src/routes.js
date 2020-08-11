@@ -5,13 +5,9 @@ import { Redirect } from "react-router-dom";
 import { DefaultLayout } from "./layouts";
 
 // Route Views
-import BlogOverview from "./views/BlogOverview";
-import UserProfileLite from "./views/UserProfileLite";
-import AddNewPost from "./views/AddNewPost";
-import Errors from "./views/Errors";
-import ComponentsOverview from "./views/ComponentsOverview";
-import Tables from "./views/Tables";
-import BlogPosts from "./views/BlogPosts";
+import Quimioterapia from "./views/Quimioterapia";
+import ShowQuimioterapia from "./views/ShowQuimioterapia";
+import AdminQuimioterapia from "./views/AdminQuimioterapia";
 import TeamsList from './views/TeamsList';
 import TeamForm from './views/TeamForm';
 
@@ -28,12 +24,12 @@ export default [
     component: Quimioterapia
   },
   {
-    path: "/quimioterapia/:id",
+    path: "/quimioterapia/show/:id",
     layout: DefaultLayout,
     component: ShowQuimioterapia
   },
   {
-    path: "/admnQuimioterapia",
+    path: "/quimioterapia/admin",
     layout: DefaultLayout,
     component: AdminQuimioterapia
   },

@@ -6,7 +6,7 @@ export default function() {
       },
       {
         title: 'Administrar Salas y Sillones',
-        to: '/admnQuimioterapia'
+        to: '/quimioterapia/admin'
       }
     ];
   }

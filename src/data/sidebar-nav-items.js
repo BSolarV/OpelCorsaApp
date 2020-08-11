@@ -7,9 +7,8 @@ export default function() {
     },
     {
       title: "Quimioterapia",
-      to: "/blog-overview",
-      htmlBefore: '<i class="material-icons">edit</i>',
-      htmlAfter: ""
+      to: "/quimioterapia",
+      htmlBefore: '<i class="material-icons">edit</i>'
     },
     // {
     //   title: "Blog Posts",
