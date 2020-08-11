@@ -90,9 +90,6 @@ class AdminQuimioterapia extends Component {
                     <thead className="bg-light">
                       <tr align="center">
                         <th scope="col" className="border-0">
-                          ID
-                        </th>
-                        <th scope="col" className="border-0">
                           Piso
                         </th>
                         <th scope="col" className="border-0">
@@ -102,7 +99,7 @@ class AdminQuimioterapia extends Component {
                           Sillones
                         </th>
                         <th scope="col" className="border-0">
-                          x
+                          Borrar
                         </th>
                       </tr>
                     </thead>
@@ -110,7 +107,6 @@ class AdminQuimioterapia extends Component {
                       {salas.map((sala, index) => {
                         return (  
                           <tr align="center" key={sala.id}>
-                                <td className="bg-info">{sala.id}</td>
                                 <td className="">{sala.piso}</td>
                                 <td className="">{sala.numero}</td>
                                 <td widht="70%" className=""> {sala.sillones.length != 0 && 
@@ -127,7 +123,6 @@ class AdminQuimioterapia extends Component {
                           <td></td>
                           <td></td>
                           <td></td>
-                          <td></td>
                           <td align="center"><button>Nuevo</button></td>
                         </tr>
                     </tbody>
@@ -138,19 +133,33 @@ class AdminQuimioterapia extends Component {
           </Row>
         </Container>
         }
-        {/* Admn Salas */}
+        {/* Admn Sillones */}
         { this.state.current == "Sillones" &&
         <Container>
           <Col>
             
           </Col>
-        {salas.map((sala, index) => {
+        {sillones.map((sillon, index) => {
             return (
-              <Col lg="2" key={sala.id}>
+              <Col lg="2" key={sillon.id}>
                 <Card small className="card-post mb-4">
                   <CardBody>
-                    <h5 className="card-title">{sala.id}</h5>
-                    <p className="card-text text-muted">{sala.numero}</p>
+                    <h5 className="card-title">Id: {sillon.id}</h5>
+                    <p lg="3"> <span style={ 
+                            sillon.estado == "libre" ?
+                            {height: "25px",
+                            width: "25px",
+                            backgroundColor: "green",
+                            borderRadius: "50%",
+                            display: "inline-block"}
+                            :
+                            {height: "25px",
+                            width: "25px",
+                            backgroundColor: "red",
+                            borderRadius: "50%",
+                            display: "inline-block"}
+                          }></span></p>
+                    {/*<p className="card-text text-muted">Estado: {sillon.estado}</p>*/}
                   </CardBody>
                 </Card>
               </Col>
