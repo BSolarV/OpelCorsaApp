@@ -55,7 +55,8 @@ class ShowQuimioterapia extends Component {
       idSala: Number(this.state.sala.id),
       idSillon: Number(id),
     }
-    quimioSillonService.assign( { data: content } ).catch( (error) => { alert(error) } );
+
+    quimioSillonService.assign( { data : content } ).catch( (error) => { alert(error) } );
     
   }
 

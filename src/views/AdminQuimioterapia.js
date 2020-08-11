@@ -123,7 +123,7 @@ class AdminQuimioterapia extends Component {
                                       return(<option>ID: {sillon.id}</option>)
                                     })}
                                   </select>}</td>
-                                <td className=""><button>x</button></td>
+                                <td className=""><Button theme="primary">x</Button></td>
                           </tr>
                           )
                         })}
@@ -132,11 +132,11 @@ class AdminQuimioterapia extends Component {
                           <td></td>
                           <td></td>
                           <td></td>
-                          <td align="center"><button onClick={() => {
+                          <td align="center"><Button theme="primary" onClick={() => {
                             this.setState({
                               ...this.state,
                               idSala: "-1",})
-                          }}>Nuevo</button></td>
+                          }}>Nuevo</Button></td>
                         </tr>
                     </tbody>
                   </table>
@@ -205,7 +205,7 @@ class AdminQuimioterapia extends Component {
                                   display: "inline-block"}
                                 }></span></td>
                                 <td widht="70%" className=""> {sillon.sala == null ? "No hay" : sillon.sala.id}</td>
-                                <td className=""><button>x</button></td>
+                                <td className=""><Button theme="primary">x</Button></td>
                           </tr>
                           )
                         })}
@@ -214,11 +214,11 @@ class AdminQuimioterapia extends Component {
                           <td></td>
                           <td></td>
                           <td></td>
-                          <td align="center"><button onClick={() => {
+                          <td align="center"><Button theme="primary" onClick={() => {
                             this.setState({
                               ...this.state,
                               idSillon: "-1",})
-                          }}>Nuevo</button></td>
+                          }}>Nuevo</Button></td>
                         </tr>
                     </tbody>
                   </table>
