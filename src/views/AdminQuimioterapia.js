@@ -9,10 +9,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
 } from "shards-react";
 
 import sillonesService from '../services/sillones.service';
