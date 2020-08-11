@@ -30,14 +30,28 @@ class ShowQuimioterapia extends Component {
   }
  
   render() {
-    const { sillones } = this.state.sala.sillones;
+    const  sillones  = this.state.sala.sillones;
     return (
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
         <Row noGutters className="page-header py-4">
-          <PageTitle sm="4" title="Sillones de la sala" subtitle="Ayudantía" className="text-sm-left" />
+          <PageTitle sm="4" title="Champions League Teams" subtitle="Ayudantía" className="text-sm-left" />
         </Row>
 
+        <Row>
+          {sillones.map((sillon) => {
+            return (
+              <Col lg="2" key={sillon.id}>
+                <Card small className="card-post mb-4">
+                  <CardBody>
+                    <h5 className="card-title">{sillon.nombre}</h5>
+                    <p className="card-text text-muted">{sillon.pais}</p>
+                  </CardBody>
+                </Card>
+              </Col>
+            )
+          })}
+        </Row>
       </Container>
     );
   }
