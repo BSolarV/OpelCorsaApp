@@ -1,12 +1,12 @@
 export default function() {
     return [
       {
-        title: 'Salas',
-        to: '/salas'
+        title: 'Salas Quimioterapia',
+        to: '/quimioterapia'
       },
       {
-        title: 'Administración',
-        to: '/administración'
+        title: 'Administrar Salas y Sillones',
+        to: '/admnQuimioterapia'
       }
     ];
   }

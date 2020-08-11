@@ -1,7 +1,12 @@
 export default function() {
   return [
     {
-      title: "Blog Dashboard",
+      title: "Solicitudes",
+      htmlBefore: '<i class="material-icons">vertical_split</i>',
+      to: "/blog-posts",
+    },
+    {
+      title: "Quimioterapia",
       to: "/blog-overview",
       htmlBefore: '<i class="material-icons">edit</i>',
       htmlAfter: ""
@@ -37,12 +42,12 @@ export default function() {
     //   to: "/errors",
     // },
     {
-      title: 'Teams',
+      title: 'Pacientes',
       htmlBefore: '<i class="material-icons">view_module</i>',
       to: '/teams-list'
     },
     {
-      title: 'Add Team',
+      title: 'Algo más',
       htmlBefore: '<i class="material-icons">note_add</i>',
       to: '/teams-form'
     }

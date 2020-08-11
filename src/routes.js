@@ -20,43 +20,24 @@ export default [
     path: "/",
     exact: true,
     layout: DefaultLayout,
-    component: () => <Redirect to="/blog-overview" />
+    component: () => <Redirect to="/quimioterapia" />
   },
   {
-    path: "/blog-overview",
+    path: "/quimioterapia",
     layout: DefaultLayout,
-    component: BlogOverview
+    component: Quimioterapia
   },
   {
-    path: "/user-profile-lite",
+    path: "/quimioterapia/:id",
     layout: DefaultLayout,
-    component: UserProfileLite
+    component: ShowQuimioterapia
   },
   {
-    path: "/add-new-post",
+    path: "/admnQuimioterapia",
     layout: DefaultLayout,
-    component: AddNewPost
+    component: AdminQuimioterapia
   },
-  {
-    path: "/errors",
-    layout: DefaultLayout,
-    component: Errors
-  },
-  {
-    path: "/components-overview",
-    layout: DefaultLayout,
-    component: ComponentsOverview
-  },
-  {
-    path: "/tables",
-    layout: DefaultLayout,
-    component: Tables
-  },
-  {
-    path: "/blog-posts",
-    layout: DefaultLayout,
-    component: BlogPosts
-  },
+  /*
   {
     path: "/teams-list",
     layout: DefaultLayout,
@@ -67,4 +48,5 @@ export default [
     layout: DefaultLayout,
     component: TeamForm
   },
+  */
 ];
