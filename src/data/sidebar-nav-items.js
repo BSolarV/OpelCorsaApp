@@ -3,7 +3,7 @@ export default function() {
     {
       title: "Solicitudes",
       htmlBefore: '<i class="material-icons">vertical_split</i>',
-      to: "/blog-posts",
+      to: "https://solrec-app.herokuapp.com/",
     },
     {
       title: "Quimioterapia",
