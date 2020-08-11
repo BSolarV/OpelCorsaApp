@@ -1,8 +1,6 @@
 import React, { Component, useState } from 'react';
 import {
-  Nav,
-  NavLink,
-  NavItem,
+  Button,
   Container,
   Row,
   Col,
@@ -24,6 +22,8 @@ class AdminQuimioterapia extends Component {
       sillones: [],
       salas: [],
       current: "Salas",
+      idSala: -1,
+      idSillon: -1,
     }
   }
 
@@ -44,26 +44,27 @@ class AdminQuimioterapia extends Component {
 
   render() {
     
-    const { sillones, salas, current } = this.state;
+    const { sillones, salas, current, idSala, idSillon   } = this.state;
 
     return (
       <Container fluid className="main-content-container px-4">
 
         {/* Page Selector */}
+      <Row>&nbsp;</Row>
         <Row>
-          <Nav activeKey="Salas">
-              <NavItem>
-                <NavLink eventKey="Salas" onClick={() => this.setState({
+              <Col lg="6">
+                <Button theme="secondary" outline={this.state.current == "Salas" ? false: true} squared block eventKey="Salas" onClick={() => this.setState({
                     ...this.state,
-                    current: "Salas",})}>Salas</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink eventKey="Sillones" onClick={() => this.setState({
+                    current: "Salas",})}>Salas</Button>
+              </Col>
+              <Col lg="6">
+                <Button theme="secondary" outline={this.state.current == "Sillones" ? false: true} squared block eventKey="Sillones" onClick={() => this.setState({
                     ...this.state,
-                    current: "Sillones",})}>Sillones</NavLink>
-              </NavItem>
-          </Nav>
+                    current: "Sillones",})}>Sillones</Button>
+              </Col>
+          
         </Row>
+      <Row>&nbsp;</Row>
 
         {/* Page Tittle */}
         <Row noGutters className="">
@@ -78,7 +79,7 @@ class AdminQuimioterapia extends Component {
         <Container>
           <Row>
             <Col>
-              
+                <h1>{this.state.idSala}</h1>
             </Col>
             <Col>
               <Card small className="mb-4">
@@ -106,7 +107,11 @@ class AdminQuimioterapia extends Component {
                     <tbody>
                       {salas.map((sala, index) => {
                         return (  
-                          <tr align="center" key={sala.id}>
+                          <tr align="center" onClick={() => {
+                            this.setState({
+                              ...this.state,
+                              idSala: sala.id,})
+                          }}>
                                 <td className="">{sala.piso}</td>
                                 <td className="">{sala.numero}</td>
                                 <td widht="70%" className=""> {sala.sillones.length != 0 && 
@@ -123,7 +128,11 @@ class AdminQuimioterapia extends Component {
                           <td></td>
                           <td></td>
                           <td></td>
-                          <td align="center"><button>Nuevo</button></td>
+                          <td align="center"><button onClick={() => {
+                            this.setState({
+                              ...this.state,
+                              idSala: "-1",})
+                          }}>Nuevo</button></td>
                         </tr>
                     </tbody>
                   </table>
@@ -137,7 +146,7 @@ class AdminQuimioterapia extends Component {
         { this.state.current == "Sillones" &&
         <Container>
           <Col>
-            
+          
           </Col>
         {sillones.map((sillon, index) => {
             return (
@@ -159,7 +168,6 @@ class AdminQuimioterapia extends Component {
                             borderRadius: "50%",
                             display: "inline-block"}
                           }></span></p>
-                    {/*<p className="card-text text-muted">Estado: {sillon.estado}</p>*/}
                   </CardBody>
                 </Card>
               </Col>

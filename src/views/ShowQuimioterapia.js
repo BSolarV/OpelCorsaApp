@@ -6,6 +6,7 @@ import {
   Card,
   CardBody,
 } from "shards-react";
+
 import quimioterapiaService from '../services/quimioterapia.service';
 
 import PageTitle from "../components/common/PageTitle";
@@ -15,22 +16,20 @@ class ShowQuimioterapia extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // En teoría asi se obtiene el id del link.
-      id: this.props.match.params.id,
       sala: false,
     }
   }
 
   componentDidMount() {
-    quimioterapiaService.show(this.state.id).then((response) => {
+    quimioterapiaService.show( this.props.match.params.id ).then((response) => {
       this.setState({
-        sala: response.status === 200 ? response.data : [],
+        sala: response.status === 200 ? response.data : false,
       })
     });
   }
  
   render() {
-    const  sillones  = this.state.sala.sillones;
+    const { sala } = this.state;
     return (
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
@@ -39,13 +38,13 @@ class ShowQuimioterapia extends Component {
         </Row>
 
         <Row>
-          {sillones.map((sillon) => {
+          {sala && sala.sillones.map( (sillon) => {
             return (
               <Col lg="2" key={sillon.id}>
                 <Card small className="card-post mb-4">
                   <CardBody>
-                    <h5 className="card-title">{sillon.nombre}</h5>
-                    <p className="card-text text-muted">{sillon.pais}</p>
+                    <h5 className="card-title">{sillon.id}</h5>
+                    <p className="card-text text-muted">{sillon.descripcion}</p>
                   </CardBody>
                 </Card>
               </Col>
