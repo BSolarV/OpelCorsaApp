@@ -3,11 +3,12 @@ import { api } from '../helpers';
 const basePath = '/quimioterapia/sillon';
 
 function assign(data) {
-    return api.post(`${basePath}/`, data);
+    return api.post(`${basePath}`, data);
 }
 
 function remove(data) {
-    return api.delete(`${basePath}/`, data);
+    alert("AAA "+data.idSala+" - "+data.idSillon);
+    return api.delete(`${basePath}`, data);
 }
 
 const quimioSillonService = {

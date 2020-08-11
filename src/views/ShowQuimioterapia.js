@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Button,
   Container,
   Row,
   Col,
@@ -8,6 +9,7 @@ import {
 } from "shards-react";
 
 import quimioterapiaService from '../services/quimioterapia.service';
+import quimioSillonService from '../services/quimioSillon.service';
 
 import PageTitle from "../components/common/PageTitle";
 
@@ -28,28 +30,80 @@ class ShowQuimioterapia extends Component {
     });
   }
  
+  removeSillon( id ){
+    var response = window.confirm("Seguro que quiere eliminar el sillon?");
+    if(response){
+      var content = {
+        idSala: Number(this.state.sala.id),
+        idSillon: Number(id),
+      }
+      quimioSillonService.remove( { data: content } ).then( (response) => { 
+        alert( response.status === 200 ? "DONE" : "NOT DONE" + response.status ) 
+      }).catch( (error) => { alert(error) } );
+    }
+  }
+
+  addSillon( id ){
+    var response = window.confirm("Seguro que quiere eliminar el sillon?");
+    if(response){
+      var content = {
+        idSala: Number(this.state.sala.id),
+        idSillon: Number(id),
+      }
+      quimioSillonService.remove( { data: content } ).then( (response) => { 
+        alert( response.status === 200 ? "DONE" : "NOT DONE" + response.status ) 
+      }).catch( (error) => { alert(error) } );
+    }
+  }
+
   render() {
     const { sala } = this.state;
     return (
       <Container fluid className="main-content-container px-4">
+
         {/* Page Header */}
         <Row noGutters className="page-header py-4">
-          <PageTitle sm="4" title="Champions League Teams" subtitle="Ayudantía" className="text-sm-left" />
+          <Col><h1>Sala Número {sala.numero}</h1></Col>
+          <Col><h1>Piso {sala.piso}</h1></Col>
         </Row>
 
         <Row>
           {sala && sala.sillones.map( (sillon) => {
             return (
-              <Col lg="2" key={sillon.id}>
-                <Card small className="card-post mb-4">
+              <Card>
                   <CardBody>
-                    <h5 className="card-title">{sillon.id}</h5>
-                    <p className="card-text text-muted">{sillon.descripcion}</p>
+                    <Container>
+                      <Row align="center">
+                        <Col lg="3">ID: {sillon.id}</Col>
+                      </Row>
+                      <Row align="center">
+                        <Col lg="3"><span style={ 
+                                  sillon.estado == "libre" ?
+                                  {height: "25px",
+                                  width: "25px",
+                                  backgroundColor: "green",
+                                  borderRadius: "50%",
+                                  display: "inline-block"}
+                                  :
+                                  {height: "25px",
+                                  width: "25px",
+                                  backgroundColor: "red",
+                                  borderRadius: "50%",
+                                  display: "inline-block"}
+                        }></span><br></br>{sillon.estado}</Col>
+                        <Col lg="6">{sillon.descripcion}</Col>
+                        <Col lg="3"><Button onClick={ () => {
+                            this.removeSillon( sillon.id )
+                        }}>Eliminar</Button></Col>
+                      </Row>
+                    </Container>
                   </CardBody>
                 </Card>
-              </Col>
-            )
-          })}
+            )})}
+        </Row>
+        <Row>
+          <Col lg="10"></Col>
+          <Col lg="2"></Col>
         </Row>
       </Container>
     );
