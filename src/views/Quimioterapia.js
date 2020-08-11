@@ -5,11 +5,9 @@ import {
   Col,
   Card,
   CardBody,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
+  Button,
 } from "shards-react";
+import { Redirect } from "react-router-dom";
 
 import quimioterapiaService from '../services/quimioterapia.service';
 import PageTitle from "../components/common/PageTitle";
@@ -43,13 +41,16 @@ class Quimioterapia extends Component {
   }
 
   render() {
+
     const { salas, piso, selector } = this.state;
     const pisos = [0, ];
+
     for (var i = 0; i < salas.length; i++) {
       if( !pisos.includes(salas[i].piso) ){
         pisos.push(salas[i].piso);
       }
     }
+    pisos.sort();
 
     return (
       <Container fluid className="main-content-container px-4">
@@ -60,32 +61,57 @@ class Quimioterapia extends Component {
         </Row>
 
         {/*Floor Selector*/}
-        <Dropdown open={this.state.open} toggle={this.toggle}>
-        <DropdownToggle>Piso:</DropdownToggle>
-          <DropdownMenu>
-            {pisos.map((aFloor, index) => {
-              return (
-                <DropdownItem onClick={() => this.setState({
-                    ...this.state, 
-                    piso: aFloor,
-                  })}>{aFloor == 0 && "Todos"}{aFloor != 0 && aFloor}</DropdownItem>
-              )
-            })}
-          </DropdownMenu>
-        </Dropdown> {this.state.piso}
         <Row>
-          {salas.map((team, index) => {
-            return (
-              <Col lg="2" key={team.id}>
-                <Card small className="card-post mb-4">
+          <Col lg="1">Piso: </Col>
+          <Col lg="11">
+            <Container>
+              <Row>
+                {pisos.map((oneFloor) => {
+                  return(
+                    <Col> <Button outline={this.state.piso == oneFloor ? false : true} pill block onClick={() => this.setState({
+                      ...this.state,
+                      piso: oneFloor,})}>{oneFloor == 0 && "Todos" || oneFloor}</Button></Col>
+                  )})}
+              </Row>
+            </Container>
+          </Col>
+        </Row>
+        <Row>&nbsp;</Row>
+        <Row >
+          {salas.map((sala) => {
+            return ( (this.state.piso == 0 || this.state.piso == sala.piso) &&
+              <Col lg="6" key={sala.id}>
+                <a  href={"/quimioterapia/"+sala.id} style={{textDecoration: "none", color: "inherit"}}><Card small className="card-post mb-4" >
                   <CardBody>
-                    <h5 className="card-title">{team.nombre}</h5>
-                    <p className="card-text text-muted">{team.pais}</p>
+                    <Container>
+                      <Row>
+                        <Col className="card-title">Sala Nro: {sala.numero}</Col>
+                        <Col className="card-title">Piso: {sala.piso}</Col>
+                      </Row>
+                      <Row>
+                        {sala.sillones.map((sillon) => {
+                          return(
+                          <Col lg="3"> <span style={ 
+                            sillon.estado == "libre" ?
+                            {height: "25px",
+                            width: "25px",
+                            backgroundColor: "green",
+                            borderRadius: "50%",
+                            display: "inline-block"}
+                            :
+                            {height: "25px",
+                            width: "25px",
+                            backgroundColor: "green",
+                            borderRadius: "50%",
+                            display: "inline-block"}
+                          }></span></Col>
+                        )})}
+                      </Row>
+                    </Container>
                   </CardBody>
-                </Card>
+                </Card></a>
               </Col>
-            )
-          })}
+          )})}
         </Row>
       </Container>
     );
