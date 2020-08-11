@@ -118,4 +118,4 @@ class Quimioterapia extends Component {
 
 }
 
-export default Quimioterapia;
+export default Quimioterapia;  

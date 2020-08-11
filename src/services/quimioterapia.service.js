@@ -19,7 +19,7 @@ function create(data) {
 }
 
 function remove(quimioId) {
-    return api.post(`${basePath}/${quimioId}`);
+    return api.delete(`${basePath}/${quimioId}`);
 }
 
 const quimioterapiaService = {

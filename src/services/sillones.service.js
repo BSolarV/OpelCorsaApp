@@ -7,7 +7,7 @@ function create(data) {
 }
 
 function remove(sillonId) {
-    return api.post(`${basePath}/${sillonId}`);
+    return api.delete(`${basePath}/${sillonId}`);
 }
 
 function show(sillonId) {

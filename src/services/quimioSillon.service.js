@@ -7,7 +7,7 @@ function assign(data) {
 }
 
 function remove(data) {
-    return api.post(`${basePath}/`, data);
+    return api.delete(`${basePath}/`, data);
 }
 
 const quimioSillonService = {
