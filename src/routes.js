@@ -20,16 +20,19 @@ export default [
   },
   {
     path: "/quimioterapia",
+    exact: true,
     layout: DefaultLayout,
     component: Quimioterapia
   },
   {
     path: "/quimioterapia/show/:id",
+    exact: true,
     layout: DefaultLayout,
     component: ShowQuimioterapia
   },
   {
     path: "/quimioterapia/admin",
+    exact: true,
     layout: DefaultLayout,
     component: AdminQuimioterapia
   },
