@@ -7,7 +7,6 @@ import {
   CardBody,
   Button,
 } from "shards-react";
-import { Redirect } from "react-router-dom";
 
 import quimioterapiaService from '../services/quimioterapia.service';
 import PageTitle from "../components/common/PageTitle";
@@ -81,7 +80,7 @@ class Quimioterapia extends Component {
           {salas.map((sala) => {
             return ( (this.state.piso == 0 || this.state.piso == sala.piso) &&
               <Col lg="6" key={sala.id}>
-                <a  href={"/quimioterapia/"+sala.id} style={{textDecoration: "none", color: "inherit"}}><Card small className="card-post mb-4" >
+                <a  href={"/quimioterapia/show/"+sala.id} style={{textDecoration: "none", color: "inherit"}}><Card small className="card-post mb-4" >
                   <CardBody>
                     <Container>
                       <Row>
@@ -101,7 +100,7 @@ class Quimioterapia extends Component {
                             :
                             {height: "25px",
                             width: "25px",
-                            backgroundColor: "green",
+                            backgroundColor: "red",
                             borderRadius: "50%",
                             display: "inline-block"}
                           }></span></Col>
