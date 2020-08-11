@@ -6,8 +6,8 @@ import {
   Card,
   CardBody,
 } from "shards-react";
-import teamsService from '../services/teams.service';
 
+import quimioterapiaService from '../services/quimioterapia.service';
 import PageTitle from "../components/common/PageTitle";
 
 class Quimioterapia extends Component {

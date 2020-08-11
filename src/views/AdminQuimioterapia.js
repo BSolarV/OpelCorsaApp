@@ -7,8 +7,14 @@ import {
   Row,
   Col,
   Card,
+  CardHeader,
   CardBody,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "shards-react";
+
 import sillonesService from '../services/sillones.service';
 import quimioterapiaService from '../services/quimioterapia.service';
 
@@ -41,6 +47,7 @@ class AdminQuimioterapia extends Component {
   }
 
   render() {
+    
     const { sillones, salas, current } = this.state;
 
     return (
@@ -48,7 +55,7 @@ class AdminQuimioterapia extends Component {
 
         {/* Page Selector */}
         <Row>
-          <Nav defaultActiveKey="Salas">
+          <Nav activeKey="Salas">
               <NavItem>
                 <NavLink eventKey="Salas" onClick={() => this.setState({
                     ...this.state,
@@ -78,20 +85,61 @@ class AdminQuimioterapia extends Component {
               
             </Col>
             <Col>
-              <Container>
-                {salas.map((sala, index) => {
-                    return (
-                      <Row className="card-post" key={sala.id}>
-                            <Col className="card-title">Id: {sala.id}</Col>
-                            <Col className="card-text text-muted">Piso: {sala.piso}</Col>
-                            <Col className="card-text text-muted">Numero: {sala.numero}</Col>
-                            <Col className="card-text text-muted"><button>+</button></Col>
-                      </Row>
-                    )
-                  })}
-                </Container>
-              </Col>
-            </Row>
+              <Card small className="mb-4">
+                <CardHeader className="border-bottom">
+                  <h6 className="m-0">Salas Actuales</h6>
+                </CardHeader>
+                <CardBody className="p-0 pb-3">
+                  <table className="table mb-0">
+                    <thead className="bg-light">
+                      <tr align="center">
+                        <th scope="col" className="border-0">
+                          ID
+                        </th>
+                        <th scope="col" className="border-0">
+                          Piso
+                        </th>
+                        <th scope="col" className="border-0">
+                          Numero
+                        </th>
+                        <th scope="col" className="border-0">
+                          Sillones
+                        </th>
+                        <th scope="col" className="border-0">
+                          x
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {salas.map((sala, index) => {
+                        return (  
+                          <tr align="center" key={sala.id}>
+                                <td className="bg-info">{sala.id}</td>
+                                <td className="">{sala.piso}</td>
+                                <td className="">{sala.numero}</td>
+                                <td widht="70%" className=""> {sala.sillones.length != 0 && 
+                                <select label={sala.sillones.length}> {sala.sillones.length}
+                                    {sala.sillones && sala.sillones.map( (sillon, indice) => {
+                                      return(<option>ID: {sillon.id}</option>)
+                                    })}
+                                  </select>}</td>
+                                <td className=""><button>x</button></td>
+                          </tr>
+                          )
+                        })}
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td align="center"><button>Nuevo</button></td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
         </Container>
         }
         {/* Admn Salas */}
