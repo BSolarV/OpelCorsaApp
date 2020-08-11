@@ -7,7 +7,6 @@ function assign(data) {
 }
 
 function remove(data) {
-    alert("AAA "+data.idSala+" - "+data.idSillon);
     return api.delete(`${basePath}`, data);
 }
 

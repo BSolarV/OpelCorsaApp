@@ -10,6 +10,7 @@ import {
 
 import quimioterapiaService from '../services/quimioterapia.service';
 import quimioSillonService from '../services/quimioSillon.service';
+import sillonesService from '../services/sillones.service';
 
 import PageTitle from "../components/common/PageTitle";
 
@@ -19,6 +20,8 @@ class ShowQuimioterapia extends Component {
     super(props);
     this.state = {
       sala: false,
+      sillones: [],
+      selected: false,
     }
   }
 
@@ -26,6 +29,12 @@ class ShowQuimioterapia extends Component {
     quimioterapiaService.show( this.props.match.params.id ).then((response) => {
       this.setState({
         sala: response.status === 200 ? response.data : false,
+      })
+    });
+    sillonesService.getAll().then((response) => {
+      this.setState({
+        ...this.state,
+        sillones: response.status === 200 ? response.data : [],
       })
     });
   }
@@ -37,27 +46,21 @@ class ShowQuimioterapia extends Component {
         idSala: Number(this.state.sala.id),
         idSillon: Number(id),
       }
-      quimioSillonService.remove( { data: content } ).then( (response) => { 
-        alert( response.status === 200 ? "DONE" : "NOT DONE" + response.status ) 
-      }).catch( (error) => { alert(error) } );
+      quimioSillonService.remove( { data: content } ).catch( (error) => { alert(error) } );
     }
   }
 
   addSillon( id ){
-    var response = window.confirm("Seguro que quiere eliminar el sillon?");
-    if(response){
-      var content = {
-        idSala: Number(this.state.sala.id),
-        idSillon: Number(id),
-      }
-      quimioSillonService.remove( { data: content } ).then( (response) => { 
-        alert( response.status === 200 ? "DONE" : "NOT DONE" + response.status ) 
-      }).catch( (error) => { alert(error) } );
+    var content = {
+      idSala: Number(this.state.sala.id),
+      idSillon: Number(id),
     }
+    quimioSillonService.assign( { data: content } ).catch( (error) => { alert(error) } );
+    
   }
 
   render() {
-    const { sala } = this.state;
+    const { sala, sillones, selected } = this.state;
     return (
       <Container fluid className="main-content-container px-4">
 
@@ -69,8 +72,8 @@ class ShowQuimioterapia extends Component {
 
         <Row>
           {sala && sala.sillones.map( (sillon) => {
-            return (
-              <Card>
+            return (<Col>
+              <Card small className="mb-4">
                   <CardBody>
                     <Container>
                       <Row align="center">
@@ -98,12 +101,24 @@ class ShowQuimioterapia extends Component {
                       </Row>
                     </Container>
                   </CardBody>
-                </Card>
+                </Card></Col>
             )})}
         </Row>
         <Row>
-          <Col lg="10"></Col>
-          <Col lg="2"></Col>
+          <Col lg="10">
+            <Container>
+              <Row>
+              {sillones && sillones.map( (sillon) => { 
+                return( <Col><Button block outline={ selected == sillon.id ? false : true } onClick={() => {
+                            this.setState({
+                              ...this.state,
+                              selected: sillon.id,})
+                          }}>ID: {sillon.id}</Button></Col> )})}</Row>
+            </Container>
+          </Col>
+          <Col lg="2"><Button onClick={ () => {
+                            this.addSillon( this.state.selected )
+                        }}>Añadir</Button></Col>
         </Row>
       </Container>
     );
