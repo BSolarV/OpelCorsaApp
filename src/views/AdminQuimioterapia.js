@@ -44,11 +44,10 @@ class AdminQuimioterapia extends Component {
 
   render() {
     
-    const { sillones, salas, current, idSala, idSillon   } = this.state;
+    const { sillones, salas, current, idSala, idSillon  } = this.state;
 
     return (
       <Container fluid className="main-content-container px-4">
-
         {/* Page Selector */}
       <Row>&nbsp;</Row>
         <Row>
@@ -91,6 +90,9 @@ class AdminQuimioterapia extends Component {
                     <thead className="bg-light">
                       <tr align="center">
                         <th scope="col" className="border-0">
+                          ID
+                        </th>
+                        <th scope="col" className="border-0">
                           Piso
                         </th>
                         <th scope="col" className="border-0">
@@ -105,13 +107,14 @@ class AdminQuimioterapia extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {salas.map((sala, index) => {
+                      {salas && salas.map((sala, index) => {
                         return (  
                           <tr align="center" onClick={() => {
                             this.setState({
                               ...this.state,
                               idSala: sala.id,})
                           }}>
+                                <td className="">{sala.id}</td>
                                 <td className="">{sala.piso}</td>
                                 <td className="">{sala.numero}</td>
                                 <td widht="70%" className=""> {sala.sillones.length != 0 && 
@@ -125,6 +128,7 @@ class AdminQuimioterapia extends Component {
                           )
                         })}
                         <tr>
+                          <td></td>
                           <td></td>
                           <td></td>
                           <td></td>
@@ -142,44 +146,92 @@ class AdminQuimioterapia extends Component {
           </Row>
         </Container>
         }
+        
         {/* Admn Sillones */}
         { this.state.current == "Sillones" &&
         <Container>
+          <Row>
           <Col>
-          
+            <h1>{this.state.idSillon}</h1>
           </Col>
-        {sillones.map((sillon, index) => {
-            return (
-              <Col lg="2" key={sillon.id}>
-                <Card small className="card-post mb-4">
-                  <CardBody>
-                    <h5 className="card-title">Id: {sillon.id}</h5>
-                    <p lg="3"> <span style={ 
-                            sillon.estado == "libre" ?
-                            {height: "25px",
-                            width: "25px",
-                            backgroundColor: "green",
-                            borderRadius: "50%",
-                            display: "inline-block"}
-                            :
-                            {height: "25px",
-                            width: "25px",
-                            backgroundColor: "red",
-                            borderRadius: "50%",
-                            display: "inline-block"}
-                          }></span></p>
-                  </CardBody>
-                </Card>
-              </Col>
-            )
-          })}
+          <Col>
+              <Card small className="mb-4">
+                <CardHeader className="border-bottom">
+                  <h6 className="m-0">Sillones Actuales</h6>
+                </CardHeader>
+                <CardBody className="p-0 pb-3">
+                  <table className="table mb-0">
+                    <thead className="bg-light">
+                      <tr align="center">
+                        <th scope="col" className="border-0">
+                          ID
+                        </th>
+                        <th scope="col" className="border-0">
+                          Descripción
+                        </th>
+                        <th scope="col" className="border-0">
+                          Estado
+                        </th>
+                        <th scope="col" className="border-0">
+                          Sala
+                        </th>
+                        <th scope="col" className="border-0">
+                          Borrar
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {sillones.map((sillon) => {
+                        return (  
+                          <tr align="center" onClick={() => {
+                            this.setState({
+                              ...this.state,
+                              idSillon: sillon.id,})
+                          }}>
+                                <td className="">{sillon.id}</td>
+                                <td className="">{sillon.descripcion}</td>
+                                <td className=""><span style={ 
+                                  sillon.estado == "libre" ?
+                                  {height: "25px",
+                                  width: "25px",
+                                  backgroundColor: "green",
+                                  borderRadius: "50%",
+                                  display: "inline-block"}
+                                  :
+                                  {height: "25px",
+                                  width: "25px",
+                                  backgroundColor: "red",
+                                  borderRadius: "50%",
+                                  display: "inline-block"}
+                                }></span></td>
+                                <td widht="70%" className=""> {sillon.sala == null ? "No hay" : sillon.sala.id}</td>
+                                <td className=""><button>x</button></td>
+                          </tr>
+                          )
+                        })}
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td align="center"><button onClick={() => {
+                            this.setState({
+                              ...this.state,
+                              idSillon: "-1",})
+                          }}>Nuevo</button></td>
+                        </tr>
+                    </tbody>
+                  </table>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
         </Container>
         }
         </Row>
       </Container>
     );
   }
-
 }
 
 export default AdminQuimioterapia;
