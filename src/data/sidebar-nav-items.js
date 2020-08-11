@@ -7,7 +7,7 @@ export default function() {
     },
     {
       title: "Quimioterapia",
-      to: "https://opelcorsa-app.herokuapp.com//quimioterapia/",
+      to: "/quimioterapia",
       htmlBefore: '<i class="material-icons">edit</i>'
     },
     {
