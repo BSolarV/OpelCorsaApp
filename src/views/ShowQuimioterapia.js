@@ -28,7 +28,7 @@ class ShowQuimioterapia extends Component {
       })
     });
   }
-
+ 
   render() {
     const { sillones } = this.state.sala.sillones;
     return (
