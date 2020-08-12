@@ -82,7 +82,7 @@ class ShowQuimioterapia extends Component {
         let sillon = this.state.sillones[i];
         sillonOptions.push( { 
           value: sillon.id, 
-          label: "ID: "+sillon.id+" ".repeat( (5-String(sillon.id).length) )+"|  Estado: "+sillon.estado+" ".repeat((22-sillon.estado.length*3))+"|  Desc: "+sillon.descripcion+" ".repeat((50-Number(sillon.descripcion.length*1.5)))+(sillon.sala === null ? "|  Sin Sala" : sillon.sala.id == undefined ? "| -" : "| Sala: "+sillon.sala.id) } );
+          label: "ID: "+sillon.id+" ".repeat( (5-String(sillon.id).length) )+"|  Estado: "+sillon.estado+" ".repeat((22-sillon.estado.length*3))+"|  Desc: "+sillon.descripcion+" ".repeat((50-Number(sillon.descripcion.length*1.5)))+(sillon.sala === null ? "|  Sin Sala" : "| Id Sala: "+sillon.sala) } );
       } 
     }
     const handleChange = e => {
@@ -106,13 +106,15 @@ class ShowQuimioterapia extends Component {
 
     return (
       <Container fluid className="main-content-container px-4">
-
+        <Row>&nbsp;</Row>
         {/* Page Header */}
-        <Row noGutters className="page-header py-4">
+        <Row noGutters className="page-header">
           <Col><h1>Sala Número {this.state.sala.numero}</h1></Col>
-          <Col><h1>Piso {this.state.sala.piso}</h1></Col>
         </Row>
-
+        <Row>
+          <Col lg="2"><h2>ID: {this.state.sala.id}</h2></Col>
+          <Col><h2>Piso {this.state.sala.piso}</h2></Col>
+        </Row>
         
           {this.state.sala && this.state.sala.sillones.map( (sillon) => {
             return (<Row><Col>
