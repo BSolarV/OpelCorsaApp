@@ -98,7 +98,7 @@ class AdminQuimioterapia extends Component {
       numero: num,
       piso: p,
     }
-    quimioterapiaService.update( content )
+    quimioterapiaService.update( id, content )
     .catch( (error) => { alert(error) } )
     .finally(()=> {window.location.reload(false)});
 
@@ -114,6 +114,12 @@ class AdminQuimioterapia extends Component {
       ...this.state,
       num: event.target.value});
   }
+  myChangeHandlerD = (event) => {
+    this.setState({
+      ...this.state,
+      descript: event.target.value});
+  }
+
 
 
 
@@ -143,7 +149,9 @@ class AdminQuimioterapia extends Component {
               <Col lg="12">
                 <h3>{"Administración de "+this.state.current}</h3> 
               </Col>
-            </Row> 
+            </Row>
+            {/* Agregar Salas*/}
+            {this.state.current == "Salas" && this.state.idSala == -1 ? 
             <Row>
               <Col>
               <h1>{this.state.idSala}</h1>
@@ -177,11 +185,104 @@ class AdminQuimioterapia extends Component {
                 </CardBody>
                 </Card>
               </Col>
-            </Row>  
-            <Row>
-              <h1>{this.state.idSillon}</h1>
-              {/*<Button>Agregar Sillon</Button>*/}
             </Row>
+            /* Actualizar Salas*/
+            : this.state.current == "Salas" && this.state.idSala != -1 ?
+            <Row>
+              <Col>
+              <h1>{this.state.idSala}</h1>
+                <Card small >
+                <CardHeader className="border-bottom">
+                  <h6 className="m-0">Actualizar Sala</h6>
+                </CardHeader>
+                <CardBody >
+                  <Container>
+                    <form>
+                      <Row>
+                      <label> Piso </label>
+                      </Row>
+                      <Row>
+                      <input type = "number" onChange={this.myChangeHandlerP} />
+                      </Row>
+                      <Row>
+                      <label> Numero </label>
+                      </Row>
+                      <Row>
+                      <input type = "number" onChange={this.myChangeHandlerN} />
+                      </Row>
+                      <Row>&nbsp;</Row> 
+                      <Row>
+                      <Button onClick={ () => {
+                                  this.editSala( this.state.idSala ,this.state.num, this.state.floor )
+                                  }}> Sumbit </Button>
+                      </Row>
+                    </form>
+                  </Container>
+                </CardBody>
+                </Card>
+              </Col>
+            </Row>
+            /* Agregar Sillones*/
+            : this.state.current == "Sillones" && this.state.idSillon == -1 ?
+            <Row>
+              <Col>
+              <h1>{this.state.idSillon}</h1>
+                <Card small >
+                <CardHeader className="border-bottom">
+                  <h6 className="m-0">Agregar Sillon</h6>
+                </CardHeader>
+                <CardBody >
+                  <Container>
+                    <form>
+                      <Row>
+                      <label> Descripcion </label>
+                      </Row>
+                      <Row>
+                      <input type = "text" onChange={this.myChangeHandlerD} />
+                      </Row>
+                      <Row>&nbsp;</Row> 
+                      <Row>
+                      <Button onClick={ () => {
+                                  this.addSillon( this.state.descript )
+                                  }}> Sumbit </Button>
+                      </Row>
+                    </form>
+                  </Container>
+                </CardBody>
+                </Card>
+              </Col>
+            </Row>
+            /* Actualizar Sillones*/
+            :
+            <Row>
+              <Col>
+              <h1>{this.state.idSillon}</h1>
+                <Card small >
+                <CardHeader className="border-bottom">
+                  <h6 className="m-0">Actualizar Sillon</h6>
+                </CardHeader>
+                <CardBody >
+                  <Container>
+                    <form>
+                      <Row>
+                      <label> Descripcion </label>
+                      </Row>
+                      <Row>
+                      <input type = "text" onChange={this.myChangeHandlerD} />
+                      </Row>
+                      <Row>&nbsp;</Row> 
+                      <Row>
+                      <Button onClick={ () => {
+                                  this.editSillon( this.state.idSillon, this.state.descript )
+                                  }}> Sumbit </Button>
+                      </Row>
+                    </form>
+                  </Container>
+                </CardBody>
+                </Card>
+              </Col>
+            </Row>
+            }  
           </Container>
         </Col>
         <Col>
