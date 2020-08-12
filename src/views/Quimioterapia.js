@@ -42,7 +42,7 @@ class Quimioterapia extends Component {
   render() {
 
     const salas = this.state.salas;
-    const pisos = [0, ];
+    var pisos = [];
 
     for (var i = 0; i < salas.length; i++) {
       if( !pisos.includes(salas[i].piso) ){
@@ -50,6 +50,7 @@ class Quimioterapia extends Component {
       }
     }
     pisos.sort();
+    pisos = [0].concat(pisos);
 
     return (
       <Container fluid className="main-content-container px-4">
