@@ -76,22 +76,6 @@ class ShowQuimioterapia extends Component {
 
   render() {
 
-    var sillonOptions = [];
-    if ( this.state.sillones ) {
-      for( let i = 0; i < this.state.sillones.length; i++){
-        let sillon = this.state.sillones[i];
-        sillonOptions.push( { 
-          value: sillon.id, 
-          label: "ID: "+sillon.id+" ".repeat( (5-String(sillon.id).length) )+"|  Estado: "+sillon.estado+" ".repeat((22-sillon.estado.length*3))+"|  Desc: "+sillon.descripcion+" ".repeat((50-Number(sillon.descripcion.length*1.5)))+(sillon.sala === null ? "|  Sin Sala" : "| Id Sala: "+sillon.sala) } );
-      } 
-    }
-    const handleChange = e => {
-      this.setState({
-        ...this.state,
-        selected: e.value,
-      });
-    }
-  
     function GetSortOrder(prop) {    
       return function(a, b) {    
           if (a[prop] > b[prop]) {    
@@ -102,7 +86,27 @@ class ShowQuimioterapia extends Component {
           return 0;    
       }    
     }
+
     if (this.state.sala) this.state.sala.sillones.sort( GetSortOrder("id") );
+
+    var sillonOptions = [];
+    if ( this.state.sillones ) {
+      for( let i = 0; i < this.state.sillones.length; i++){
+        let sillon = this.state.sillones[i];
+        sillonOptions.push( { 
+          value: sillon.id, 
+          label: "ID: "+sillon.id+" ".repeat( (5-String(sillon.id).length) )+"|  Estado: "+sillon.estado+" ".repeat((22-sillon.estado.length*3))+"|  Desc: "+sillon.descripcion+" ".repeat((50-Number(sillon.descripcion.length*1.5)))+(sillon.sala === null ? "|  Sin Sala" : "| Id Sala: "+sillon.sala) } );
+      } 
+    }
+    sillonOptions.sort(GetSortOrder("value"))
+    const handleChange = e => {
+      this.setState({
+        ...this.state,
+        selected: e.value,
+      });
+    }
+  
+    
 
     return (
       <Container fluid className="main-content-container px-4">
