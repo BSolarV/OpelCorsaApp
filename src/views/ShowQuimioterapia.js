@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import {
   Button,
   Container,
@@ -22,10 +22,6 @@ class ShowQuimioterapia extends Component {
       sillones: [],
       selected: false,
     }
-  }
-
-  scream(){
-    alert("AAAAAAAAAAAAAAAAAAAAAAAAh");
   }
 
   componentDidMount() {
@@ -105,7 +101,7 @@ class ShowQuimioterapia extends Component {
       }    
     }
     if (this.state.sala) this.state.sala.sillones.sort( GetSortOrder("id") );
-    ///////////////////////////////
+
     return (
       <Container fluid className="main-content-container px-4">
 
