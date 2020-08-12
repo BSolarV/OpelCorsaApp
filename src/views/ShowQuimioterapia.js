@@ -166,7 +166,7 @@ class ShowQuimioterapia extends Component {
                         }}>Añadir</Button>
           </Col>
         </Row>
-        <Row>&nbsp; </Row>
+        <Row>&nbsp;</Row>
       </Container>
     );
   }

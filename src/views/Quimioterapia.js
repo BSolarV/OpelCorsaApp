@@ -10,6 +10,7 @@ import {
 
 import quimioterapiaService from '../services/quimioterapia.service';
 import PageTitle from "../components/common/PageTitle";
+import Select from "react-select";
 
 class Quimioterapia extends Component {
 
@@ -41,16 +42,40 @@ class Quimioterapia extends Component {
 
   render() {
 
+    function GetSortOrder(prop) {    
+      return function(a, b) {    
+          if (a[prop] > b[prop]) {    
+              return 1;    
+          } else if (a[prop] < b[prop]) {    
+              return -1;    
+          }    
+          return 0;    
+      }    
+    }
+
     const salas = this.state.salas;
     var pisos = [];
 
     for (var i = 0; i < salas.length; i++) {
       if( !pisos.includes(salas[i].piso) ){
-        pisos.push(salas[i].piso);
+        pisos.push( parseInt( salas[i].piso ) );
       }
     }
-    pisos.sort();
-    pisos = [0].concat(pisos);
+    let pisosOptions = [];
+    for (let i = 0; i < pisos.length; i++) {
+      const piso = parseInt(pisos[i]);
+      pisosOptions.push( { value: piso, label: piso } )
+    };
+
+    pisosOptions.sort(GetSortOrder("value"));
+    pisosOptions = [{ value: 0, label: "Todos" }].concat(pisosOptions);
+
+    const handleChange = e => {
+      this.setState({
+        ...this.state,
+        piso: e.value,
+      });
+    }
 
     return (
       <Container fluid className="main-content-container px-4">
@@ -62,16 +87,13 @@ class Quimioterapia extends Component {
 
         {/*Floor Selector*/}
         <Row>
-          <Col lg="1">Piso: </Col>
+          <Col align="center" lg="1"><h4>Piso:</h4></Col>
           <Col lg="11">
             <Container>
               <Row>
-                {pisos.map((oneFloor) => {
-                  return(
-                    <Col> <Button outline={this.state.piso === oneFloor ? false : true} pill block onClick={() => this.setState({
-                      ...this.state,
-                      piso: oneFloor,})}>{oneFloor === 0 ? "Todos" : oneFloor}</Button></Col>
-                  )})}
+              <Col lg = "12">
+                <Select placeholder="Buscar" isSearchable options={ pisosOptions } onChange={ handleChange }/>
+              </Col>
               </Row>
             </Container>
           </Col>

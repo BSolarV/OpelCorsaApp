@@ -17,10 +17,11 @@ class AdminQuimioterapia extends Component {
 
   constructor(props) {
     super(props);
+    const urlParams = new URLSearchParams(window.location.search);
     this.state = {
       sillones: [],
       salas: [],
-      current: "Salas",
+      current: urlParams.get('page') ? urlParams.get('page') : "Salas",
       idSala: false,
       idSillon: false,
       num: -1,
@@ -28,6 +29,8 @@ class AdminQuimioterapia extends Component {
       descript: "Default",
     }
   }
+
+
 
   componentDidMount() {
     sillonesService.getAll().then((response) => {
@@ -50,7 +53,9 @@ class AdminQuimioterapia extends Component {
     if(response){
       sillonesService.remove( id )
       .catch( (error) => { alert(error) } )
-      .finally(()=> {window.location.reload(false)});
+      .finally(()=> {
+        window.location.href += "?page="+this.state.current;
+        window.location.reload(false)});
     }
   }
 
@@ -78,7 +83,8 @@ class AdminQuimioterapia extends Component {
     if(response){
       quimioterapiaService.remove( id )
       .catch( (error) => { alert(error) } )
-      .finally(()=> {window.location.reload(false)});
+      .finally(()=> {
+        window.location.reload(false)});
     }
       
   }
@@ -124,6 +130,18 @@ class AdminQuimioterapia extends Component {
 
 
   render() {
+    function GetSortOrder(prop) {    
+      return function(a, b) {    
+          if (a[prop] > b[prop]) {    
+              return 1;    
+          } else if (a[prop] < b[prop]) {    
+              return -1;    
+          }    
+          return 0;    
+      }    
+    }
+    if (this.state.sillones) this.state.sillones.sort( GetSortOrder("id") );
+    if (this.state.salas) this.state.salas.sort( GetSortOrder("id") );
 
     return (
       <Container fluid className="main-content-container px-4">
@@ -134,14 +152,18 @@ class AdminQuimioterapia extends Component {
           <Container>
             <Row>
               <Col>
-                <Button theme="secondary" outline={this.state.current === "Salas" ? false: true} squared block eventKey="Salas" onClick={() => this.setState({
+                <Button theme="secondary" outline={this.state.current === "Salas" ? false: true} squared block eventKey="Salas" onClick={() => {
+                  window.location.href = window.location.href.substring(0, window.location.href.indexOf("?") )+"?page=Salas";
+                  this.setState({
                     ...this.state,
-                    current: "Salas",})}>Salas</Button>
+                    current: "Salas",})}}>Salas</Button>
               </Col>
               <Col>
-                <Button theme="secondary" outline={this.state.current === "Sillones" ? false: true} squared block eventKey="Sillones" onClick={() => this.setState({
+                <Button theme="secondary" outline={this.state.current === "Sillones" ? false: true} squared block eventKey="Sillones" onClick={() => {
+                  window.location.href = window.location.href.substring(0, window.location.href.indexOf("?") )+"?page=Sillones";
+                  this.setState({
                     ...this.state,
-                    current: "Sillones",})}>Sillones</Button>
+                    current: "Sillones",})}}>Sillones</Button>
               </Col>
             </Row>
               {/* Page Tittle */}
@@ -259,10 +281,25 @@ class AdminQuimioterapia extends Component {
                 </CardHeader>
                 <CardBody >
                   <Container>
-                  <Button block onClick={ () => {
+                  <Row align="center"><Col><span style={ 
+                                  this.state.idSillon.estado === "libre" ?
+                                  {height: "25px",
+                                  width: "25px",
+                                  backgroundColor: "green",
+                                  borderRadius: "50%",
+                                  display: "inline-block"}
+                                  :
+                                  {height: "25px",
+                                  width: "25px",
+                                  backgroundColor: "red",
+                                  borderRadius: "50%",
+                                  display: "inline-block"}
+                        }></span><br></br>{this.state.idSillon.estado}</Col></Row>
+                        <Row>&nbsp;</Row>
+                  <Row><Col><Button block onClick={ () => {
                             var description = this.state.idSillon.estado == "ocupado" ? "libre": "ocupado";
                             this.editSillon( this.state.idSillon.id, description )
-                        }}>Cambiar Estado</Button>
+                        }}>Cambiar Estado</Button></Col></Row>
                   </Container>
                 </CardBody>
                 </Card>
