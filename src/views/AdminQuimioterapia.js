@@ -7,6 +7,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  any,
 } from "shards-react";
 
 import sillonesService from '../services/sillones.service';
@@ -44,42 +45,64 @@ class AdminQuimioterapia extends Component {
   removeSillon( id ){
     var response = window.confirm("Seguro que quiere eliminar el sillon?");
     if(response){
-      var content = {
-        idSala: Number(this.state.sala.id),
-        idSillon: Number(id),
-      }
-      sillonesService.remove( { data: content } ).catch( (error) => { alert(error) } );
+      sillonesService.remove( id )
+      .catch( (error) => { alert(error) } )
+      .finally(()=> {window.location.reload(false)});
     }
   }
 
-  addSillon( id ){
+  addSillon( desc ){
     var content = {
-      idSala: Number(this.state.sala.id),
-      idSillon: Number(id),
+      descripcion: desc,
     }
-    sillonesService.create( content ).catch( (error) => { alert(error) } );
+    sillonesService.create( content )
+    .catch( (error) => { alert(error) } )
+    .finally(()=> {window.location.reload(false)});
+  }
+
+  editSillon( id ,desc ){
+    var content = {
+      descripcion: desc,
+    }
+    sillonesService.update( id, content ).
+    catch( (error) => { alert(error) } )
+    .finally(()=> {window.location.reload(false)});
   }
   
   /*Quimioterapia Services*/
   removeSala( id ){
-    var response = window.confirm("Seguro que quiere eliminar el sillon?");
+    var response = window.confirm("Seguro que quiere eliminar la sala?");
     if(response){
-      var content = {
-        idSala: Number(this.state.sala.id),
-        idSillon: Number(id),
-      }
-      quimioterapiaService.remove( { data: content } ).catch( (error) => { alert(error) } );
+      quimioterapiaService.remove( id )
+      .catch( (error) => { alert(error) } )
+      .finally(()=> {window.location.reload(false)});
     }
+      
   }
   
-  addSala( id ){
+  addSala( num, p ){
     var content = {
-      idSala: Number(this.state.sala.id),
-      idSillon: Number(id),
+      numero: num,
+      piso: p,
     }
-    quimioterapiaService.assign( content ).catch( (error) => { alert(error) } );
+    quimioterapiaService.create( content )
+    .catch( (error) => { alert(error) } )
+    .finally(()=> {window.location.reload(false)});
   }
 
+  editSala( id ,num, p){
+    var content = {
+      numero: num,
+      piso: p,
+    }
+    quimioterapiaService.update( content )
+    .catch( (error) => { alert(error) } )
+    .finally(()=> {window.location.reload(false)});
+
+  }
+
+
+  
   render() {
 
     return (
@@ -169,7 +192,9 @@ class AdminQuimioterapia extends Component {
                                       return(<option>ID: {sillon.id}</option>)
                                     })}
                                   </select>}</td>
-                                <td className=""><Button theme="primary">x</Button></td>
+                                <td className=""><Button theme="primary" onClick={ () => {
+                                  this.removeSala( sala.id );
+                                  }}>x</Button></td>
                           </tr>
                           )
                         })}
@@ -243,7 +268,9 @@ class AdminQuimioterapia extends Component {
                                   display: "inline-block"}
                                 }></span></td>
                                 <td widht="70%" className=""> {sillon.sala === null ? "No hay" : sillon.sala.id}</td>
-                                <td className=""><Button theme="primary">x</Button></td>
+                                <td className=""><Button theme="primary" onClick={ () => {
+                                  this.removeSillon( sillon.id )
+                                  }}>x</Button></td>
                           </tr>
                           )
                         })}

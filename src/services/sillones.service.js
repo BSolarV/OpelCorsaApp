@@ -11,7 +11,7 @@ function remove(sillonId) {
 }
 
 function show(sillonId) {
-    return api.get(`${basePath}/${sillonId}`)
+    return api.get(`${basePath}/${sillonId}`);
 }
 
 function update(sillonId, data) {

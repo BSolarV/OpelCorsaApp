@@ -7,7 +7,7 @@ function getAll() {
 }
 
 function show(quimioId) {
-    return api.get(`${basePath}/${quimioId}`)
+    return api.get(`${basePath}/${quimioId}`);
 }
 
 function update(quimioId, data) {
