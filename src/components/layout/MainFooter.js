@@ -10,9 +10,9 @@ const MainFooter = ({ contained, menuItems, copyright }) => (
         <Nav>
           {menuItems.map((item, idx) => (
             <NavItem key={idx}>
-              <NavLink tag={Link} to={item.to}>
+              <a href={item.to}> <NavLink disabled tag={Link} to={item.to}>
                 {item.title}
-              </NavLink>
+              </NavLink></a>
             </NavItem>
           ))}
         </Nav>
@@ -39,28 +39,24 @@ MainFooter.propTypes = {
 
 MainFooter.defaultProps = {
   contained: false,
-  copyright: "Copyright © 2018 DesignRevision",
+  copyright: "Copyright © 2020 OpelCorsa",
   menuItems: [
     {
-      title: "Home",
-      to: "#"
+      title: "Windu2",
+      to: "https://github.com/windu2"
     },
     {
-      title: "Services",
-      to: "#"
+      title: "BsolarV",
+      to: "https://github.com/BSolarV"
     },
     {
-      title: "About",
-      to: "#"
+      title: "Rhernan",
+      to: "https://github.com/rhernang"
     },
     {
-      title: "Products",
+      title: "Bvivar",
       to: "#"
     },
-    {
-      title: "Blog",
-      to: "#"
-    }
   ]
 };
 
