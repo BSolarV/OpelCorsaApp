@@ -23,6 +23,9 @@ class AdminQuimioterapia extends Component {
       current: "Salas",
       idSala: -1,
       idSillon: -1,
+      num: -1,
+      floor: -1,
+      descript: "Default",
     }
   }
 
@@ -101,8 +104,19 @@ class AdminQuimioterapia extends Component {
 
   }
 
+  myChangeHandlerP = (event) => {
+    this.setState({
+      ...this.state,
+      floor: event.target.value});
+  }
+  myChangeHandlerN = (event) => {
+    this.setState({
+      ...this.state,
+      num: event.target.value});
+  }
 
-  
+
+
   render() {
 
     return (
@@ -131,10 +145,42 @@ class AdminQuimioterapia extends Component {
               </Col>
             </Row> 
             <Row>
+              <Col>
               <h1>{this.state.idSala}</h1>
+                <Card small >
+                <CardHeader className="border-bottom">
+                  <h6 className="m-0">Agregar Sala</h6>
+                </CardHeader>
+                <CardBody >
+                  <Container>
+                    <form>
+                      <Row>
+                      <label> Piso </label>
+                      </Row>
+                      <Row>
+                      <input type = "number" onChange={this.myChangeHandlerP} />
+                      </Row>
+                      <Row>
+                      <label> Numero </label>
+                      </Row>
+                      <Row>
+                      <input type = "number" onChange={this.myChangeHandlerN} />
+                      </Row>
+                      <Row>&nbsp;</Row> 
+                      <Row>
+                      <Button onClick={ () => {
+                                  this.addSala( this.state.num, this.state.floor )
+                                  }}> Sumbit </Button>
+                      </Row>
+                    </form>
+                  </Container>
+                </CardBody>
+                </Card>
+              </Col>
             </Row>  
             <Row>
               <h1>{this.state.idSillon}</h1>
+              {/*<Button>Agregar Sillon</Button>*/}
             </Row>
           </Container>
         </Col>
