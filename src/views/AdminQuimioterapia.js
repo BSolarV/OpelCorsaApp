@@ -21,8 +21,8 @@ class AdminQuimioterapia extends Component {
       sillones: [],
       salas: [],
       current: "Salas",
-      idSala: -1,
-      idSillon: -1,
+      idSala: false,
+      idSillon: false,
       num: -1,
       floor: -1,
       descript: "Default",
@@ -151,10 +151,9 @@ class AdminQuimioterapia extends Component {
               </Col>
             </Row>
             {/* Agregar Salas*/}
-            {this.state.current == "Salas" && this.state.idSala == -1 ? 
+            {this.state.current == "Salas" && this.state.idSala == false ? 
             <Row>
               <Col>
-              <h1>{this.state.idSala}</h1>
                 <Card small >
                 <CardHeader className="border-bottom">
                   <h6 className="m-0">Agregar Sala</h6>
@@ -187,13 +186,12 @@ class AdminQuimioterapia extends Component {
               </Col>
             </Row>
             /* Actualizar Salas*/
-            : this.state.current == "Salas" && this.state.idSala != -1 ?
+            : this.state.current == "Salas" && this.state.idSala != false ?
             <Row>
               <Col>
-              <h1>{this.state.idSala}</h1>
                 <Card small >
                 <CardHeader className="border-bottom">
-                  <h6 className="m-0">Actualizar Sala</h6>
+                  <h6 className="m-0">Actualizar Sala con Id : {this.state.idSala.id}</h6>
                 </CardHeader>
                 <CardBody >
                   <Container>
@@ -202,18 +200,18 @@ class AdminQuimioterapia extends Component {
                       <label> Piso </label>
                       </Row>
                       <Row>
-                      <input type = "number" onChange={this.myChangeHandlerP} />
+                      <input type = "number" value ={ this.state.idSala.piso }   onChange={this.myChangeHandlerP} />
                       </Row>
                       <Row>
                       <label> Numero </label>
                       </Row>
                       <Row>
-                      <input type = "number" onChange={this.myChangeHandlerN} />
+                      <input type = "number" value ={ this.state.idSala.numero }  onChange={this.myChangeHandlerN} />
                       </Row>
                       <Row>&nbsp;</Row> 
                       <Row>
                       <Button onClick={ () => {
-                                  this.editSala( this.state.idSala ,this.state.num, this.state.floor )
+                                  this.editSala( this.state.idSala.id ,this.state.num, this.state.floor )
                                   }}> Sumbit </Button>
                       </Row>
                     </form>
@@ -223,10 +221,9 @@ class AdminQuimioterapia extends Component {
               </Col>
             </Row>
             /* Agregar Sillones*/
-            : this.state.current == "Sillones" && this.state.idSillon == -1 ?
+            : this.state.current == "Sillones" && this.state.idSillon == false ?
             <Row>
               <Col>
-              <h1>{this.state.idSillon}</h1>
                 <Card small >
                 <CardHeader className="border-bottom">
                   <h6 className="m-0">Agregar Sillon</h6>
@@ -256,10 +253,9 @@ class AdminQuimioterapia extends Component {
             :
             <Row>
               <Col>
-              <h1>{this.state.idSillon}</h1>
                 <Card small >
                 <CardHeader className="border-bottom">
-                  <h6 className="m-0">Actualizar Sillon</h6>
+                  <h6 className="m-0">Actualizar Sillon con Id: {this.state.idSillon.id} </h6>
                 </CardHeader>
                 <CardBody >
                   <Container>
@@ -268,12 +264,12 @@ class AdminQuimioterapia extends Component {
                       <label> Descripcion </label>
                       </Row>
                       <Row>
-                      <input type = "text" onChange={this.myChangeHandlerD} />
+                      <input type = "text" value ={ this.state.idSillon.descripcion }  onChange={this.myChangeHandlerD} />
                       </Row>
                       <Row>&nbsp;</Row> 
                       <Row>
                       <Button onClick={ () => {
-                                  this.editSillon( this.state.idSillon, this.state.descript )
+                                  this.editSillon( this.state.idSillon.id, this.state.descript )
                                   }}> Sumbit </Button>
                       </Row>
                     </form>
@@ -328,7 +324,7 @@ class AdminQuimioterapia extends Component {
                           <tr align="center" onClick={() => {
                             this.setState({
                               ...this.state,
-                              idSala: sala.id,})
+                              idSala: sala,})
                           }}>
                                 <td className="">{sala.id}</td>
                                 <td className="">{sala.piso}</td>
@@ -353,7 +349,7 @@ class AdminQuimioterapia extends Component {
                           <td align="center"><Button theme="primary" onClick={() => {
                             this.setState({
                               ...this.state,
-                              idSala: "-1",})
+                              idSala: false,})
                           }}>Nuevo</Button></td>
                         </tr>
                     </tbody>
@@ -396,7 +392,7 @@ class AdminQuimioterapia extends Component {
                           <tr align="center" onClick={() => {
                             this.setState({
                               ...this.state,
-                              idSillon: sillon.id,})
+                              idSillon: sillon,})
                           }}>
                                 <td className="">{sillon.id}</td>
                                 <td className="">{sillon.descripcion}</td>
@@ -429,7 +425,7 @@ class AdminQuimioterapia extends Component {
                           <td align="center"><Button theme="primary" onClick={() => {
                             this.setState({
                               ...this.state,
-                              idSillon: "-1",})
+                              idSillon: false,})
                           }}>Nuevo</Button></td>
                         </tr>
                     </tbody>
