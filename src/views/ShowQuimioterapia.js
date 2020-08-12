@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import {
   Button,
   Container,
@@ -6,11 +6,8 @@ import {
   Col,
   Card,
   CardBody,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
 } from "shards-react";
+import Select from 'react-select';
 
 import quimioterapiaService from '../services/quimioterapia.service';
 import quimioSillonService from '../services/quimioSillon.service';
@@ -20,21 +17,15 @@ class ShowQuimioterapia extends Component {
 
   constructor(props) {
     super(props);
-    this.sillonDropOpenToggle = this.sillonDropOpenToggle.bind(this);
     this.state = {
       sala: false,
       sillones: [],
       selected: false,
-      sillonDropOpen: false 
     }
   }
 
-  sillonDropOpenToggle() {
-    this.setState(prevState => {
-      return { 
-        ...this.state,
-        sillonDropOpen: !prevState.sillonDropOpen };
-    });
+  scream(){
+    alert("AAAAAAAAAAAAAAAAAAAAAAAAh");
   }
 
   componentDidMount() {
@@ -78,8 +69,25 @@ class ShowQuimioterapia extends Component {
       sillonesService.update(id, content).catch( (error) => { alert(error) } );
     }
   }
+  
+  
 
   render() {
+
+    var sillonOptions = [];
+    if ( this.state.sillones ) {
+      for( let i = 0; i < this.state.sillones.length; i++){
+        let sillon = this.state.sillones[i];
+        sillonOptions.push( { value: sillon.id, label: "ID: "+sillon.id+" Estado: "+sillon.estado+" Desc: "+sillon.descripcion } );
+      } 
+    }
+    const handleChange = e => {
+      this.setState({
+        ...this.state,
+        selected: e.value,
+      });
+    }
+  
 
     return (
       <Container fluid className="main-content-container px-4">
@@ -131,23 +139,11 @@ class ShowQuimioterapia extends Component {
             )})}
         </Row>
         <Row>
-          <Col>
-            <Container>
-              <Row>
-                <Col>
-                  {this.state.sillones && this.state.sillones.map( (sillon) => { 
-                    return( <Button block outline={ this.state.selected === sillon.id ? false : true } onClick={() => {
-                                this.setState({
-                                  ...this.state,
-                                  selected: sillon.id,})
-                              }}>ID: {sillon.id}</Button> )})}
-                </Col>
-                
-              </Row>
-            </Container>
+          <Col lg = "10">
+            <Select isSearchable options={ sillonOptions } onChange={ handleChange }/>
           </Col>
-          <Col>
-          <Button onClick={ () => {
+          <Col lg="2">
+          <Button block onClick={ () => {
                             this.addSillon( this.state.selected );
                             window.location.reload(false)
                         }}>Añadir</Button>
