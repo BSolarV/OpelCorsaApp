@@ -12,8 +12,6 @@ import quimioterapiaService from '../services/quimioterapia.service';
 import quimioSillonService from '../services/quimioSillon.service';
 import sillonesService from '../services/sillones.service';
 
-import PageTitle from "../components/common/PageTitle";
-
 class ShowQuimioterapia extends Component {
 
   constructor(props) {
@@ -82,7 +80,7 @@ class ShowQuimioterapia extends Component {
                       </Row>
                       <Row align="center">
                         <Col lg="3"><span style={ 
-                                  sillon.estado == "libre" ?
+                                  sillon.estado === "libre" ?
                                   {height: "25px",
                                   width: "25px",
                                   backgroundColor: "green",
@@ -111,7 +109,7 @@ class ShowQuimioterapia extends Component {
             <Container>
               <Row>
               {sillones && sillones.map( (sillon) => { 
-                return( <Col><Button block outline={ selected == sillon.id ? false : true } onClick={() => {
+                return( <Col><Button block outline={ selected === sillon.id ? false : true } onClick={() => {
                             this.setState({
                               ...this.state,
                               selected: sillon.id,})

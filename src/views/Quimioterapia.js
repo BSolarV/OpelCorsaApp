@@ -41,7 +41,7 @@ class Quimioterapia extends Component {
 
   render() {
 
-    const { salas, piso, selector } = this.state;
+    const salas = this.state.salas;
     const pisos = [0, ];
 
     for (var i = 0; i < salas.length; i++) {
@@ -67,9 +67,9 @@ class Quimioterapia extends Component {
               <Row>
                 {pisos.map((oneFloor) => {
                   return(
-                    <Col> <Button outline={this.state.piso == oneFloor ? false : true} pill block onClick={() => this.setState({
+                    <Col> <Button outline={this.state.piso === oneFloor ? false : true} pill block onClick={() => this.setState({
                       ...this.state,
-                      piso: oneFloor,})}>{oneFloor == 0 && "Todos" || oneFloor}</Button></Col>
+                      piso: oneFloor,})}>{oneFloor === 0 ? "Todos" : oneFloor}</Button></Col>
                   )})}
               </Row>
             </Container>
@@ -77,8 +77,8 @@ class Quimioterapia extends Component {
         </Row>
         <Row>&nbsp;</Row>
         <Row >
-          {salas.map((sala) => {
-            return ( (this.state.piso == 0 || this.state.piso == sala.piso) &&
+          {salas && salas.map((sala) => {
+            return ( (this.state.piso === 0 || this.state.piso === sala.piso) &&
               <Col lg="6" key={sala.id}>
                 <a  href={"/quimioterapia/show/"+sala.id} style={{textDecoration: "none", color: "inherit"}}><Card small className="card-post mb-4" >
                   <CardBody>
@@ -91,7 +91,7 @@ class Quimioterapia extends Component {
                         {sala.sillones.map((sillon) => {
                           return(
                           <Col lg="3"> <span style={ 
-                            sillon.estado == "libre" ?
+                            sillon.estado === "libre" ?
                             {height: "25px",
                             width: "25px",
                             backgroundColor: "green",

@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import {
   Button,
   Container,
@@ -11,8 +11,6 @@ import {
 
 import sillonesService from '../services/sillones.service';
 import quimioterapiaService from '../services/quimioterapia.service';
-
-import PageTitle from "../components/common/PageTitle";
 
 class AdminQuimioterapia extends Component {
 
@@ -43,8 +41,6 @@ class AdminQuimioterapia extends Component {
   }
 
   render() {
-    
-    const { sillones, salas, current, idSala, idSillon  } = this.state;
 
     return (
       <Container fluid className="main-content-container px-4">
@@ -55,12 +51,12 @@ class AdminQuimioterapia extends Component {
           <Container>
             <Row>
               <Col>
-                <Button theme="secondary" outline={this.state.current == "Salas" ? false: true} squared block eventKey="Salas" onClick={() => this.setState({
+                <Button theme="secondary" outline={this.state.current === "Salas" ? false: true} squared block eventKey="Salas" onClick={() => this.setState({
                     ...this.state,
                     current: "Salas",})}>Salas</Button>
               </Col>
               <Col>
-                <Button theme="secondary" outline={this.state.current == "Sillones" ? false: true} squared block eventKey="Sillones" onClick={() => this.setState({
+                <Button theme="secondary" outline={this.state.current === "Sillones" ? false: true} squared block eventKey="Sillones" onClick={() => this.setState({
                     ...this.state,
                     current: "Sillones",})}>Sillones</Button>
               </Col>
@@ -88,7 +84,7 @@ class AdminQuimioterapia extends Component {
         {/*Page Content*/}
 
         {/* Admn Salas */}
-        { this.state.current == "Salas" &&
+        { this.state.current === "Salas" &&
         
             
               <Card small className="mb-4">
@@ -117,7 +113,7 @@ class AdminQuimioterapia extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {salas && salas.map((sala, index) => {
+                      {this.state.salas && this.state.salas.map((sala) => {
                         return (  
                           <tr align="center" onClick={() => {
                             this.setState({
@@ -127,9 +123,9 @@ class AdminQuimioterapia extends Component {
                                 <td className="">{sala.id}</td>
                                 <td className="">{sala.piso}</td>
                                 <td className="">{sala.numero}</td>
-                                <td widht="70%" className=""> {sala.sillones.length != 0 && 
+                                <td widht="70%" className=""> {sala.sillones.length !== 0 && 
                                 <select label={sala.sillones.length}> {sala.sillones.length}
-                                    {sala.sillones && sala.sillones.map( (sillon, indice) => {
+                                    {sala.sillones && sala.sillones.map( (sillon) => {
                                       return(<option>ID: {sillon.id}</option>)
                                     })}
                                   </select>}</td>
@@ -155,7 +151,7 @@ class AdminQuimioterapia extends Component {
         }
         
         {/* Admn Sillones */}
-        { this.state.current == "Sillones" &&
+        { this.state.current === "Sillones" &&
         
               <Card small className="mb-4">
                 <CardHeader className="border-bottom">
@@ -183,7 +179,7 @@ class AdminQuimioterapia extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {sillones.map((sillon) => {
+                      {this.state.sillones.map((sillon) => {
                         return (  
                           <tr align="center" onClick={() => {
                             this.setState({
@@ -193,7 +189,7 @@ class AdminQuimioterapia extends Component {
                                 <td className="">{sillon.id}</td>
                                 <td className="">{sillon.descripcion}</td>
                                 <td className=""><span style={ 
-                                  sillon.estado == "libre" ?
+                                  sillon.estado === "libre" ?
                                   {height: "25px",
                                   width: "25px",
                                   backgroundColor: "green",
@@ -206,7 +202,7 @@ class AdminQuimioterapia extends Component {
                                   borderRadius: "50%",
                                   display: "inline-block"}
                                 }></span></td>
-                                <td widht="70%" className=""> {sillon.sala == null ? "No hay" : sillon.sala.id}</td>
+                                <td widht="70%" className=""> {sillon.sala === null ? "No hay" : sillon.sala.id}</td>
                                 <td className=""><Button theme="primary">x</Button></td>
                           </tr>
                           )

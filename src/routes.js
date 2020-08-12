@@ -8,8 +8,6 @@ import { DefaultLayout } from "./layouts";
 import Quimioterapia from "./views/Quimioterapia";
 import ShowQuimioterapia from "./views/ShowQuimioterapia";
 import AdminQuimioterapia from "./views/AdminQuimioterapia";
-import TeamsList from './views/TeamsList';
-import TeamForm from './views/TeamForm';
 
 export default [
   {
