@@ -49,7 +49,9 @@ class ShowQuimioterapia extends Component {
         idSala: Number(this.state.sala.id),
         idSillon: Number(id),
       }
-      quimioSillonService.remove( { data: content } ).catch( (error) => { alert(error) } );
+      quimioSillonService.remove( { data: content } )
+      .catch( (error) => { alert(error) } )
+      .finally(()=> {window.location.reload(false)});
     }
   }
 
@@ -58,7 +60,9 @@ class ShowQuimioterapia extends Component {
       idSala: Number(this.state.sala.id),
       idSillon: Number(id),
     }
-    quimioSillonService.assign( content ).catch( (error) => { alert(error) } );
+    quimioSillonService.assign( content )
+    .catch( (error) => { alert(error) } )
+    .finally(()=> {window.location.reload(false)});
   }
 
   editStateSillon( id, desc ){
@@ -66,7 +70,9 @@ class ShowQuimioterapia extends Component {
       estado: desc,
     }
     if( window.confirm("Seguro que quiere cambiar el estado?") ){
-      sillonesService.update(id, content).catch( (error) => { alert(error) } );
+      sillonesService.update(id, content)
+      .catch( (error) => { alert(error) } )
+      .finally(()=> {window.location.reload(false)});
     }
   }
   
@@ -136,12 +142,10 @@ class ShowQuimioterapia extends Component {
                         <Col lg="6">{sillon.descripcion}</Col>
                         <Col><Button block onClick={ () => {
                             var description = sillon.estado == "ocupado" ? "libre": "ocupado";
-                            this.editStateSillon( sillon.id, description );
-                            window.location.reload(false)
+                            this.editStateSillon( sillon.id, description )
                         }}>Cambiar Estado</Button></Col>
                         <Col><Button block onClick={ () => {
-                            this.removeSillon( sillon.id );
-                            window.location.reload(false)
+                            this.removeSillon( sillon.id )
                         }}>Eliminar</Button></Col>
                       </Row>
                     </Container>
@@ -154,8 +158,7 @@ class ShowQuimioterapia extends Component {
           </Col>
           <Col lg="2">
           <Button block onClick={ () => {
-                            this.addSillon( this.state.selected );
-                            window.location.reload(false)
+                            this.addSillon( this.state.selected )
                         }}>Añadir</Button>
           </Col>
         </Row>
