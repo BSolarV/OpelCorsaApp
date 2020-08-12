@@ -88,7 +88,18 @@ class ShowQuimioterapia extends Component {
       });
     }
   
-
+    function GetSortOrder(prop) {    
+      return function(a, b) {    
+          if (a[prop] > b[prop]) {    
+              return 1;    
+          } else if (a[prop] < b[prop]) {    
+              return -1;    
+          }    
+          return 0;    
+      }    
+    }
+    if (this.state.sala) this.state.sala.sillones.sort( GetSortOrder("id") );
+    ///////////////////////////////
     return (
       <Container fluid className="main-content-container px-4">
 
@@ -98,9 +109,9 @@ class ShowQuimioterapia extends Component {
           <Col><h1>Piso {this.state.sala.piso}</h1></Col>
         </Row>
 
-        <Row>
+        
           {this.state.sala && this.state.sala.sillones.map( (sillon) => {
-            return (<Col>
+            return (<Row><Col>
               <Card small className="mb-4">
                   <CardBody>
                     <Container>
@@ -135,9 +146,8 @@ class ShowQuimioterapia extends Component {
                       </Row>
                     </Container>
                   </CardBody>
-                </Card></Col>
+                </Card></Col></Row>
             )})}
-        </Row>
         <Row>
           <Col lg = "10">
             <Select isSearchable options={ sillonOptions } onChange={ handleChange }/>
@@ -149,6 +159,7 @@ class ShowQuimioterapia extends Component {
                         }}>Añadir</Button>
           </Col>
         </Row>
+        <Row>&nbsp; </Row>
       </Container>
     );
   }
