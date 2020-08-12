@@ -65,7 +65,7 @@ class AdminQuimioterapia extends Component {
 
   editSillon( id ,desc ){
     var content = {
-      descripcion: desc,
+      estado: desc,
     }
     sillonesService.update( id, content ).
     catch( (error) => { alert(error) } )
@@ -177,7 +177,7 @@ class AdminQuimioterapia extends Component {
                       <Row>
                       <Button onClick={ () => {
                                   this.addSala( this.state.num, this.state.floor )
-                                  }}> Sumbit </Button>
+                                  }}> Agregar </Button>
                       </Row>
                     </form>
                   </Container>
@@ -200,19 +200,19 @@ class AdminQuimioterapia extends Component {
                       <label> Piso </label>
                       </Row>
                       <Row>
-                      <input type = "number" value ={ this.state.idSala.piso }   onChange={this.myChangeHandlerP} />
+                      <input type = "number" defaultValue ={this.state.idSala.piso}  onChange={this.myChangeHandlerP} />
                       </Row>
                       <Row>
                       <label> Numero </label>
                       </Row>
                       <Row>
-                      <input type = "number" value ={ this.state.idSala.numero }  onChange={this.myChangeHandlerN} />
+                      <input type = "number" defaultValue ={this.state.idSala.numero}  onChange={this.myChangeHandlerN} />
                       </Row>
                       <Row>&nbsp;</Row> 
                       <Row>
                       <Button onClick={ () => {
                                   this.editSala( this.state.idSala.id ,this.state.num, this.state.floor )
-                                  }}> Sumbit </Button>
+                                  }}> Actualizar </Button>
                       </Row>
                     </form>
                   </Container>
@@ -241,7 +241,7 @@ class AdminQuimioterapia extends Component {
                       <Row>
                       <Button onClick={ () => {
                                   this.addSillon( this.state.descript )
-                                  }}> Sumbit </Button>
+                                  }}> Agregar </Button>
                       </Row>
                     </form>
                   </Container>
@@ -259,20 +259,10 @@ class AdminQuimioterapia extends Component {
                 </CardHeader>
                 <CardBody >
                   <Container>
-                    <form>
-                      <Row>
-                      <label> Descripcion </label>
-                      </Row>
-                      <Row>
-                      <input type = "text" value ={ this.state.idSillon.descripcion }  onChange={this.myChangeHandlerD} />
-                      </Row>
-                      <Row>&nbsp;</Row> 
-                      <Row>
-                      <Button onClick={ () => {
-                                  this.editSillon( this.state.idSillon.id, this.state.descript )
-                                  }}> Sumbit </Button>
-                      </Row>
-                    </form>
+                  <Button block onClick={ () => {
+                            var description = this.state.idSillon.estado == "ocupado" ? "libre": "ocupado";
+                            this.editSillon( this.state.idSillon.id, description )
+                        }}>Cambiar Estado</Button>
                   </Container>
                 </CardBody>
                 </Card>
@@ -324,7 +314,10 @@ class AdminQuimioterapia extends Component {
                           <tr align="center" onClick={() => {
                             this.setState({
                               ...this.state,
-                              idSala: sala,})
+                              idSala: sala,
+                              floor: sala.piso,
+                              num: sala.numero,
+                            })
                           }}>
                                 <td className="">{sala.id}</td>
                                 <td className="">{sala.piso}</td>
@@ -392,7 +385,9 @@ class AdminQuimioterapia extends Component {
                           <tr align="center" onClick={() => {
                             this.setState({
                               ...this.state,
-                              idSillon: sillon,})
+                              idSillon: sillon,
+                              descript: sillon.estado,
+                            })
                           }}>
                                 <td className="">{sillon.id}</td>
                                 <td className="">{sillon.descripcion}</td>
@@ -410,7 +405,7 @@ class AdminQuimioterapia extends Component {
                                   borderRadius: "50%",
                                   display: "inline-block"}
                                 }></span></td>
-                                <td widht="70%" className=""> {sillon.sala === null ? "No hay" : sillon.sala.id}</td>
+                                <td widht="70%" className=""> {sillon.sala === null ? "No hay" : sillon.sala}</td>
                                 <td className=""><Button theme="primary" onClick={ () => {
                                   this.removeSillon( sillon.id )
                                   }}>x</Button></td>
