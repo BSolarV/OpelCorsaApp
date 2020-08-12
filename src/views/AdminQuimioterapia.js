@@ -40,6 +40,46 @@ class AdminQuimioterapia extends Component {
     });
   }
 
+  /* Sillones Services */
+  removeSillon( id ){
+    var response = window.confirm("Seguro que quiere eliminar el sillon?");
+    if(response){
+      var content = {
+        idSala: Number(this.state.sala.id),
+        idSillon: Number(id),
+      }
+      sillonesService.remove( { data: content } ).catch( (error) => { alert(error) } );
+    }
+  }
+
+  addSillon( id ){
+    var content = {
+      idSala: Number(this.state.sala.id),
+      idSillon: Number(id),
+    }
+    sillonesService.create( content ).catch( (error) => { alert(error) } );
+  }
+  
+  /*Quimioterapia Services*/
+  removeSala( id ){
+    var response = window.confirm("Seguro que quiere eliminar el sillon?");
+    if(response){
+      var content = {
+        idSala: Number(this.state.sala.id),
+        idSillon: Number(id),
+      }
+      quimioterapiaService.remove( { data: content } ).catch( (error) => { alert(error) } );
+    }
+  }
+  
+  addSala( id ){
+    var content = {
+      idSala: Number(this.state.sala.id),
+      idSillon: Number(id),
+    }
+    quimioterapiaService.assign( content ).catch( (error) => { alert(error) } );
+  }
+
   render() {
 
     return (

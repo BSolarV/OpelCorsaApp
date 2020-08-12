@@ -6,6 +6,10 @@ import {
   Col,
   Card,
   CardBody,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "shards-react";
 
 import quimioterapiaService from '../services/quimioterapia.service';
@@ -16,11 +20,21 @@ class ShowQuimioterapia extends Component {
 
   constructor(props) {
     super(props);
+    this.sillonDropOpenToggle = this.sillonDropOpenToggle.bind(this);
     this.state = {
       sala: false,
       sillones: [],
       selected: false,
+      sillonDropOpen: false 
     }
+  }
+
+  sillonDropOpenToggle() {
+    this.setState(prevState => {
+      return { 
+        ...this.state,
+        sillonDropOpen: !prevState.sillonDropOpen };
+    });
   }
 
   componentDidMount() {
@@ -53,24 +67,31 @@ class ShowQuimioterapia extends Component {
       idSala: Number(this.state.sala.id),
       idSillon: Number(id),
     }
-
     quimioSillonService.assign( content ).catch( (error) => { alert(error) } );
-    
+  }
+
+  editStateSillon( id, desc ){
+    var content = {
+      estado: desc,
+    }
+    if( window.confirm("Seguro que quiere cambiar el estado?") ){
+      sillonesService.update(id, content).catch( (error) => { alert(error) } );
+    }
   }
 
   render() {
-    const { sala, sillones, selected } = this.state;
+
     return (
       <Container fluid className="main-content-container px-4">
 
         {/* Page Header */}
         <Row noGutters className="page-header py-4">
-          <Col><h1>Sala Número {sala.numero}</h1></Col>
-          <Col><h1>Piso {sala.piso}</h1></Col>
+          <Col><h1>Sala Número {this.state.sala.numero}</h1></Col>
+          <Col><h1>Piso {this.state.sala.piso}</h1></Col>
         </Row>
 
         <Row>
-          {sala && sala.sillones.map( (sillon) => {
+          {this.state.sala && this.state.sala.sillones.map( (sillon) => {
             return (<Col>
               <Card small className="mb-4">
                   <CardBody>
@@ -94,7 +115,12 @@ class ShowQuimioterapia extends Component {
                                   display: "inline-block"}
                         }></span><br></br>{sillon.estado}</Col>
                         <Col lg="6">{sillon.descripcion}</Col>
-                        <Col lg="3"><Button onClick={ () => {
+                        <Col><Button block onClick={ () => {
+                            var description = sillon.estado == "ocupado" ? "libre": "ocupado";
+                            this.editStateSillon( sillon.id, description );
+                            window.location.reload(false)
+                        }}>Cambiar Estado</Button></Col>
+                        <Col><Button block onClick={ () => {
                             this.removeSillon( sillon.id );
                             window.location.reload(false)
                         }}>Eliminar</Button></Col>
@@ -105,21 +131,27 @@ class ShowQuimioterapia extends Component {
             )})}
         </Row>
         <Row>
-          <Col lg="10">
+          <Col>
             <Container>
               <Row>
-              {sillones && sillones.map( (sillon) => { 
-                return( <Col><Button block outline={ selected === sillon.id ? false : true } onClick={() => {
-                            this.setState({
-                              ...this.state,
-                              selected: sillon.id,})
-                          }}>ID: {sillon.id}</Button></Col> )})}</Row>
+                <Col>
+                  {this.state.sillones && this.state.sillones.map( (sillon) => { 
+                    return( <Button block outline={ this.state.selected === sillon.id ? false : true } onClick={() => {
+                                this.setState({
+                                  ...this.state,
+                                  selected: sillon.id,})
+                              }}>ID: {sillon.id}</Button> )})}
+                </Col>
+                
+              </Row>
             </Container>
           </Col>
-          <Col lg="2"><Button onClick={ () => {
+          <Col>
+          <Button onClick={ () => {
                             this.addSillon( this.state.selected );
                             window.location.reload(false)
-                        }}>Añadir</Button></Col>
+                        }}>Añadir</Button>
+          </Col>
         </Row>
       </Container>
     );
