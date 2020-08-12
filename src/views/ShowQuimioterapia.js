@@ -80,7 +80,9 @@ class ShowQuimioterapia extends Component {
     if ( this.state.sillones ) {
       for( let i = 0; i < this.state.sillones.length; i++){
         let sillon = this.state.sillones[i];
-        sillonOptions.push( { value: sillon.id, label: "ID: "+sillon.id+" Estado: "+sillon.estado+" Desc: "+sillon.descripcion } );
+        sillonOptions.push( { 
+          value: sillon.id, 
+          label: "ID: "+sillon.id+" ".repeat( (5-String(sillon.id).length) )+"|  Estado: "+sillon.estado+" ".repeat((22-sillon.estado.length*3))+"|  Desc: "+sillon.descripcion+" ".repeat((50-Number(sillon.descripcion.length*1.5)))+(sillon.sala === null ? "|  Sin Sala" : sillon.sala.id == undefined ? "| -" : "| Sala: "+sillon.sala.id) } );
       } 
     }
     const handleChange = e => {
@@ -150,7 +152,7 @@ class ShowQuimioterapia extends Component {
             )})}
         <Row>
           <Col lg = "10">
-            <Select isSearchable options={ sillonOptions } onChange={ handleChange }/>
+            <Select placeholder="Buscar" isSearchable options={ sillonOptions } onChange={ handleChange }/>
           </Col>
           <Col lg="2">
           <Button block onClick={ () => {
