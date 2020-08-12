@@ -51,36 +51,46 @@ class AdminQuimioterapia extends Component {
         {/* Page Selector */}
       <Row>&nbsp;</Row>
         <Row>
-              <Col lg="6">
+        <Col>
+          <Container>
+            <Row>
+              <Col>
                 <Button theme="secondary" outline={this.state.current == "Salas" ? false: true} squared block eventKey="Salas" onClick={() => this.setState({
                     ...this.state,
                     current: "Salas",})}>Salas</Button>
               </Col>
-              <Col lg="6">
+              <Col>
                 <Button theme="secondary" outline={this.state.current == "Sillones" ? false: true} squared block eventKey="Sillones" onClick={() => this.setState({
                     ...this.state,
                     current: "Sillones",})}>Sillones</Button>
               </Col>
-          
-        </Row>
-      <Row>&nbsp;</Row>
+            </Row>
+              {/* Page Tittle */}
+            <Row>
+              <Col lg="12">
+                <h3>{"Administración de "+this.state.current}</h3> 
+              </Col>
+            </Row> 
+            <Row>
+              <h1>{this.state.idSala}</h1>
+            </Row>  
+            <Row>
+              <h1>{this.state.idSillon}</h1>
+            </Row>
+          </Container>
+        </Col>
+        <Col>
+        
+        
 
-        {/* Page Tittle */}
-        <Row noGutters className="">
-          <PageTitle sm="4" title={"Administración "+this.state.current} className="text-sm-left" />
-        </Row>
+        
 
         {/*Page Content*/}
 
         {/* Admn Salas */}
-        <Row>
         { this.state.current == "Salas" &&
-        <Container>
-          <Row>
-            <Col>
-                <h1>{this.state.idSala}</h1>
-            </Col>
-            <Col>
+        
+            
               <Card small className="mb-4">
                 <CardHeader className="border-bottom">
                   <h6 className="m-0">Salas Actuales</h6>
@@ -142,19 +152,11 @@ class AdminQuimioterapia extends Component {
                   </table>
                 </CardBody>
               </Card>
-            </Col>
-          </Row>
-        </Container>
         }
         
         {/* Admn Sillones */}
         { this.state.current == "Sillones" &&
-        <Container>
-          <Row>
-          <Col>
-            <h1>{this.state.idSillon}</h1>
-          </Col>
-          <Col>
+        
               <Card small className="mb-4">
                 <CardHeader className="border-bottom">
                   <h6 className="m-0">Sillones Actuales</h6>
@@ -224,11 +226,9 @@ class AdminQuimioterapia extends Component {
                   </table>
                 </CardBody>
               </Card>
-            </Col>
-          </Row>
-        </Container>
         }
-        </Row>
+      </Col>    
+      </Row>
       </Container>
     );
   }

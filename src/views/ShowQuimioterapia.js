@@ -56,7 +56,7 @@ class ShowQuimioterapia extends Component {
       idSillon: Number(id),
     }
 
-    quimioSillonService.assign( { data : content } ).catch( (error) => { alert(error) } );
+    quimioSillonService.assign( content ).catch( (error) => { alert(error) } );
     
   }
 
@@ -97,7 +97,8 @@ class ShowQuimioterapia extends Component {
                         }></span><br></br>{sillon.estado}</Col>
                         <Col lg="6">{sillon.descripcion}</Col>
                         <Col lg="3"><Button onClick={ () => {
-                            this.removeSillon( sillon.id )
+                            this.removeSillon( sillon.id );
+                            window.location.reload(false)
                         }}>Eliminar</Button></Col>
                       </Row>
                     </Container>
@@ -118,7 +119,8 @@ class ShowQuimioterapia extends Component {
             </Container>
           </Col>
           <Col lg="2"><Button onClick={ () => {
-                            this.addSillon( this.state.selected )
+                            this.addSillon( this.state.selected );
+                            window.location.reload(false)
                         }}>Añadir</Button></Col>
         </Row>
       </Container>
