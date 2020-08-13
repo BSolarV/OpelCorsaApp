@@ -28,7 +28,7 @@ export default function() {
     {
       title: 'Personal y Equipos',
       htmlBefore: '<i class="material-icons">person_search</i>',
-      to: 'https://chopinhauer-web.herokuapp.com/all-pservice'
+      to: 'https://chopinhauer-web.herokuapp.com/pservice/all-pservice'
     }
   ];
 }
